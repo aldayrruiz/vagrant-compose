@@ -19,6 +19,7 @@ echo -e "-- Installing Apache web server\n"
 apt-get install -y apache2 libapache2-mod-php > /dev/null 2>&1
 
 if [ ! -f /var/www/html/wp-login.php ]; then
+    echo -e "-- Installing Wordpress\n"
     rm /var/www/html/index.html
     cd /var/www/html
     wget "http://wordpress.org/latest.tar.gz"
@@ -31,20 +32,6 @@ grep -q "ServerName ${LOCALHOST}" "${APACHE_CONFIG}" || echo "ServerName ${LOCAL
 
 echo -e "-- Restarting Apache web server\n"
 service apache2 restart
-
-# TEST #########################################################################
-echo -e "-- Creating a dummy index.html file\n"
-cat > /var/www/html/index.html <<EOD
-<html>
-<head>
-<title>${HOSTNAME}</title>
-</head>
-<body>
-<h1>${HOSTNAME}</h1>
-<p>Hi sir, I am going to serve you today!</p>
-</body>
-</html>
-EOD
 
 # END ##########################################################################
 echo -e "-- -------------- --"
